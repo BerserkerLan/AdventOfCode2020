@@ -38,22 +38,22 @@ def is_valid_passport_with_more_validation(passport, compulsory_fields):
         pass_field_pair = pass_field.split(':')
         if (pass_field_pair[0] in fields_contained_dict):
             if (pass_field_pair[0] == "byr"):
-                if (re.match("(19[2-9][0-9])|(200[0-2])", pass_field_pair[1])):
+                if (re.match("(19[2-9][0-9])|(200[0-2])", pass_field_pair[1]) and len(pass_field_pair[1]) == 4):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "iyr"):
-                if (re.match("(201[0-9])|(2020)", pass_field_pair[1])):
+                if (re.match("(201[0-9])|(2020)", pass_field_pair[1]) and len(pass_field_pair[1]) == 4):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "eyr"):
-                if (re.match("(202[0-9])|(2030)", pass_field_pair[1])):
+                if (re.match("(202[0-9])|(2030)", pass_field_pair[1]) and len(pass_field_pair[1]) == 4):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "hgt"):
-                if (re.search("((1[5-8][0-9])|(19[0-3])cm)|((59)|(6[0-9])|(7[0-6])in)", pass_field_pair[1])):
+                if (re.search("(1[5-8][0-9]|19[0-3])cm|(59|6[0-9]|7[0-6])in", pass_field_pair[1])):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "hcl"):
-                if (re.search("#([a-f0-9]{6})", pass_field_pair[1])):
+                if (re.search("#([a-f0-9]{6})", pass_field_pair[1]) and len(pass_field_pair[1]) == 7):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "ecl"):
-                if (str(pass_field_pair[1]) in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]):
+                if (pass_field_pair[1] in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]):
                     fields_contained_dict[pass_field_pair[0]] = True
             elif (pass_field_pair[0] == "pid"):
                 if (re.search("[0-9]{9}", pass_field_pair[1]) and len(pass_field_pair[1]) == 9):
@@ -69,4 +69,3 @@ def count_valid_passports_with_validations(passport, compulsory_fields):
 
 
 print(count_valid_passports_with_validations(passport_info_list, ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']))
-# Meant to be 160, this prints 164 for some reason, no idea why though :( )
